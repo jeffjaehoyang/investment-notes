@@ -70,9 +70,13 @@
     @apply font-primary text-base font-bold md:text-lg;
   }
 
+  body {
+    @apply bg-gray-950;
+  }
+
   body,
   .p {
-    @apply font-primary text-sm md:text-base;
+    @apply font-primary text-sm text-neutral-200 md:text-base;
   }
   /* #endregion  /**======== Typography =========== */
 

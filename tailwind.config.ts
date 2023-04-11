@@ -45,10 +45,14 @@ export default {
             backgroundPosition: '700px 0',
           },
         },
+        shine: {
+          '100%': { left: '125%' },
+        },
       },
       animation: {
         flicker: 'flicker 3s linear infinite',
         shimmer: 'shimmer 1.3s linear infinite',
+        shine: 'shine 1s',
       },
     },
   },

@@ -3,10 +3,9 @@ import { useRouter } from 'next/router';
 
 // !STARTERCONF Change these default meta
 const defaultMeta = {
-  title: 'Next.js + Tailwind CSS + TypeScript Starter',
-  siteName: 'Next.js + Tailwind CSS + TypeScript Starter',
-  description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
+  title: 'Investor Notes',
+  siteName: 'investor-notes.com',
+  description: 'Investment notes, for long-term investors.',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
   url: 'https://tsnext-tw.thcl.dev',
   type: 'website',
@@ -72,11 +71,7 @@ export default function Seo(props: SeoProps) {
             content={meta.date}
           />
           {/* // !STARTERCONF Remove or change to your name */}
-          <meta
-            name='author'
-            property='article:author'
-            content='Theodorus Clarence'
-          />
+          <meta name='author' property='article:author' content='Jeff Yang' />
         </>
       )}
 
@@ -84,9 +79,9 @@ export default function Seo(props: SeoProps) {
       {favicons.map((linkProps) => (
         <link key={linkProps.href} {...linkProps} />
       ))}
-      <meta name='msapplication-TileColor' content='#ffffff' />
+      <meta name='msapplication-TileColor' content='#000000' />
       <meta name='msapplication-config' content='/favicon/browserconfig.xml' />
-      <meta name='theme-color' content='#ffffff' />
+      <meta name='theme-color' content='#000000' />
     </Head>
   );
 }
