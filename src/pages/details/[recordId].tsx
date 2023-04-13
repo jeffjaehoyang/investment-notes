@@ -106,15 +106,15 @@ const DetailsPage = () => {
         <div className='flex flex-col items-center justify-center'>
           <div className='font-bold text-xl mb-2'>Current</div>
           <div>
-            $
-            {(
-              (investmentRecord?.amount as number) + dollarGains
-            ).toLocaleString()}{' '}
-            (
-            {dollarGains >= 0
-              ? `+$${dollarGains.toLocaleString()}`
-              : `-$${Math.abs(dollarGains).toLocaleString()}`}
-            )
+            {isLoading
+              ? '--'
+              : `$${(
+                  (investmentRecord?.amount as number) + dollarGains
+                ).toLocaleString()} (${
+                  dollarGains >= 0
+                    ? `+$${dollarGains.toLocaleString()}`
+                    : `-$${Math.abs(dollarGains).toLocaleString()}`
+                })`}
           </div>
           <div></div>
         </div>

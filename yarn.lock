@@ -2328,7 +2328,7 @@ anymatch@^3.0.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apexcharts@^3.18.0:
+apexcharts@^3.18.0, apexcharts@^3.37.3:
   version "3.37.3"
   resolved "https://registry.npmjs.org/apexcharts/-/apexcharts-3.37.3.tgz"
   integrity sha512-+rnUui9uC3Mvh9qbQxUfqBnuJ0nAJOYTp+yKnA5bVmmndKXj5X/Q+OVIxkq0Jr5ysiK200Dsg1Tuz/OUG+DEpw==
