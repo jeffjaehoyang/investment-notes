@@ -24,7 +24,9 @@ Data APIs: Yahoo Finance, Clearbit Logo
 
 Chart Library: React ApexChart
 
-Form Handling: Formik & Yup
+Form Handling: Formik & Yup & react-select
+
+Misc: react-toast
 
 ## Development
 ```
