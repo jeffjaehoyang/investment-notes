@@ -1,4 +1,4 @@
-import { InvestmentRecord, StockData } from '@/types';
+import { InvestmentRecord, StockData, User } from '@/types';
 
 export function api(url: string): Promise<StockData[]> {
   return fetch(url)
@@ -107,4 +107,16 @@ export const findNextAvailableDate = (
   return nextAvailableDateIndex === -1
     ? dates.length - 1
     : nextAvailableDateIndex;
+};
+
+export const formatDate = (date: Date = new Date()) => {
+  const year = date.toLocaleString('default', { year: 'numeric' });
+  const month = date.toLocaleString('default', { month: '2-digit' });
+  const day = date.toLocaleString('default', { day: '2-digit' });
+
+  return [year, month, day].join('-');
+};
+
+export const getFirstName = (user: User) => {
+  return user.name.split(' ')[0];
 };

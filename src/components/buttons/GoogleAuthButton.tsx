@@ -23,3 +23,5 @@ export const GoogleAuthButton: React.FC = () => {
     </button>
   );
 };
+
+export default GoogleAuthButton;

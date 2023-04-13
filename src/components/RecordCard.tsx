@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -11,7 +12,8 @@ import useSWR from 'swr';
 import UpTriangle from '@/images/svg/up-triangle.svg';
 import UpsideDownTriangle from '@/images/svg/upside-down-triangle.svg';
 import { getMultiplier, getStartDateMatchingData } from '@/lib/dataUtils';
-import fetcherWithTicker from '@/lib/fetcherWithTicker';
+import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
+import getStockData from '@/lib/fetchers/getStockData';
 import { InvestmentRecord, StockData } from '@/types';
 
 interface props {
@@ -23,29 +25,52 @@ interface props {
  * in the dashboard.
  */
 const RecordCard = ({ investmentRecord }: props) => {
+  const { data: session } = useSession();
   const tickerSymbol = investmentRecord?.tickerSymbol;
   const {
     data: stockData,
     error,
     isLoading,
-  } = useSWR<{ data: StockData[] }>(
+  } = useSWR<StockData[]>(
     tickerSymbol
       ? {
           url: '/api/stockData/',
           ticker: tickerSymbol,
         }
       : null,
-    fetcherWithTicker
+    getStockData
   );
+  const { data: investmentRecords, mutate } = useSWR<InvestmentRecord[]>(
+    session?.user
+      ? { url: '/api/investmentRecords/', args: session?.user.email }
+      : null,
+    getInvestmentRecordsForUser
+  );
+
   const stockDataMatchingDates = getStartDateMatchingData(
     investmentRecord,
-    stockData?.data as StockData[]
+    stockData as StockData[]
   );
   const multiplier = getMultiplier(stockDataMatchingDates.data);
   const gains =
     multiplier >= 1
       ? Math.round((multiplier - 1) * 100)
       : Math.round((1 - multiplier) * 100);
+
+  const handleDeleteRecord = async () => {
+    const res = await fetch(`/api/investmentRecords/${investmentRecord.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const rawData = await res.json();
+    // handle state change after mutation is done
+    // after record is deleted, we can mutate the list of investment records
+    // which will trigger a re-render of the list, removing the deleted one.
+    // https://swr.vercel.app/docs/mutation
+    mutate(investmentRecords?.filter((record) => record.id !== rawData.data));
+  };
 
   return (
     <div className='group flex flex-col rounded-lg border border-gray-800 bg-gray-900 bg-opacity-75 px-4 py-4 text-sm transition ease-in-out delay-150 hover:-translate-y-0.5 duration-200'>
@@ -62,7 +87,10 @@ const RecordCard = ({ investmentRecord }: props) => {
           <div className='ml-4'>{investmentRecord.tickerSymbol}</div>
         </div>
 
-        <button className='invisible group-hover:visible'>
+        <button
+          className='invisible group-hover:visible'
+          onClick={handleDeleteRecord}
+        >
           <RiDeleteBin6Fill className='text-red-400' />
         </button>
       </div>
@@ -73,7 +101,7 @@ const RecordCard = ({ investmentRecord }: props) => {
           <div className='flex flex-row items-center'>
             <BsFillCalendar2CheckFill />
             <div className='ml-2'>
-              Date Recorded:{' '}
+              Recorded On:{' '}
               {new Date(investmentRecord.startDate).toLocaleDateString()}
             </div>
           </div>

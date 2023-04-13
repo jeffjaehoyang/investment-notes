@@ -1,3 +1,5 @@
+// Chart option configurations for react-apexcharts
+
 export const getChartOptionsConfig = (
   startDate: string | undefined,
   symbol: string | undefined,

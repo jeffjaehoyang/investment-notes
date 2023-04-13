@@ -1,14 +1,13 @@
 export interface InvestmentRecord {
-  timestamp: string;
+  createdAt: string;
   id: string;
-  uid: string;
   startDate: Date;
   tickerSymbol: string;
   companyName: string;
   companyDomain: string;
   amount: number;
   notes: string;
-  isInvestmentMade: boolean;
+  didInvest: boolean;
   marketData?: {
     dates: Array<string>;
     data: Array<number>;

@@ -9,14 +9,14 @@ datasource db {
 }
 
 model InvestmentRecord {
-  id               Int      @id @default(autoincrement())
-  amount           Float
-  companyDomain    String
-  companyName      String
-  tickerSymbol     String
-  isInvestmentMade Boolean
-  notes            String
-  startDate        DateTime
-  timestamp        DateTime
-  email            String
+  id            Int      @id @default(autoincrement())
+  amount        Float
+  companyDomain String
+  companyName   String
+  tickerSymbol  String
+  didInvest     Boolean
+  notes         String
+  startDate     DateTime
+  createdAt     DateTime @default(now())
+  email         String
 }

@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
 
-import { GoogleAuthButton } from '@/components/buttons/GoogleAuthButton';
-
+import GoogleAuthButton from '@/components/buttons/GoogleAuthButton';
 import { siteName } from '@/constant/env';
-
-import LogoImg from '../../images/svg/logo.svg';
+import LogoImg from '@/images/svg/logo.svg';
 
 const Navbar: React.FC = () => {
   return (
