@@ -1,3 +1,9 @@
+import UpTriangle from '@/images/svg/up-triangle.svg';
+import UpsideDownTriangle from '@/images/svg/upside-down-triangle.svg';
+import { getMultiplier, getStartDateMatchingData } from '@/lib/dataUtils';
+import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
+import getStockData from '@/lib/fetchers/getStockData';
+import { InvestmentRecord, StockData } from '@/types';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -8,13 +14,6 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { RiDeleteBin6Fill, RiMoneyDollarCircleFill } from 'react-icons/ri';
 import { RxDoubleArrowRight } from 'react-icons/rx';
 import useSWR from 'swr';
-
-import UpTriangle from '@/images/svg/up-triangle.svg';
-import UpsideDownTriangle from '@/images/svg/upside-down-triangle.svg';
-import { getMultiplier, getStartDateMatchingData } from '@/lib/dataUtils';
-import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
-import getStockData from '@/lib/fetchers/getStockData';
-import { InvestmentRecord, StockData } from '@/types';
 
 interface props {
   investmentRecord: InvestmentRecord;
@@ -76,7 +75,7 @@ const RecordCard = ({ investmentRecord }: props) => {
     <div className='group flex flex-col rounded-lg border border-gray-800 bg-gray-900 bg-opacity-75 px-4 py-4 text-sm transition ease-in-out delay-150 hover:-translate-y-0.5 duration-200'>
       {/* record card header */}
       <div className='flex flex-row items-center justify-between text-lg font-semibold'>
-        <div className='flex flex-row items-center'>
+        <div className='flex flex-row items-center' style={{ minHeight: 40 }}>
           <Image
             alt='logo'
             src={`https://logo.clearbit.com/${investmentRecord.companyDomain}`}

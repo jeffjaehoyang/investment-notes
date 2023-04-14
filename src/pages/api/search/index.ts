@@ -1,12 +1,4 @@
 import { getErrorMessage } from '@/lib/functionUtils';
-
-/**
- * This API endpoint returns an object with 2 fields.
- * - companyDomain
- * - companyName
- *
- * This endpoint only accepts GET requests.
- */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import yf from 'yahoo-finance2';
 
@@ -24,20 +16,20 @@ export default async function handler(
     }
 
     if (req.method === 'GET') {
-      const result = await yf.quoteSummary(tickerSymbol as string, {
-        modules: ['summaryProfile', 'quoteType'],
+      const searchResults = await yf.search(tickerSymbol as string, {
+        quotesCount: 5,
+        newsCount: 0,
       });
-      const companyWebsiteUrl = result?.summaryProfile?.website;
-      const domain = new URL(companyWebsiteUrl as string);
-      let cleanDomain = domain.hostname.replace('www.', '');
-      if (tickerSymbol === 'META') {
-        cleanDomain = 'fb.com';
-      }
+      console.log(searchResults.quotes.length);
+      const filteredResult = searchResults.quotes.slice(0, 5).map((quote) => {
+        return {
+          value: quote.symbol,
+          label: `${quote.symbol} (${quote.shortname})`,
+        };
+      });
+      console.log('filtered result: ', filteredResult);
       return res.status(200).json({
-        data: {
-          companyDomain: cleanDomain,
-          companyName: result?.quoteType?.longName,
-        },
+        data: filteredResult,
       });
     }
   } catch (error) {

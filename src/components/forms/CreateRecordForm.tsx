@@ -1,14 +1,15 @@
+import { formatDate } from '@/lib/dataUtils';
+import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
+import { useEscapeKey } from '@/lib/functionUtils';
+import { InvestmentRecord } from '@/types';
 import { useFormik } from 'formik';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { Dispatch, SetStateAction } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import AsyncSelect from 'react-select/async';
 import useSWR from 'swr';
 import * as Yup from 'yup';
-
-import { formatDate } from '@/lib/dataUtils';
-import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
-import { InvestmentRecord } from '@/types';
 
 interface Props {
   showModal: boolean;
@@ -85,6 +86,7 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
           },
           body: JSON.stringify({
             ...values,
+            notes: values.notes.length ? values.notes : 'No notes recorded.',
             companyDomain: companyInfoResponseRawData.data.companyDomain,
             companyName: companyInfoResponseRawData.data.companyName,
           }),
@@ -107,6 +109,16 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
   const handleFormClose = () => {
     formik.resetForm();
     setShowModal(false);
+  };
+
+  useEscapeKey(handleFormClose);
+
+  // fetch filteres search results for dropdown
+  const loadOptions = (userInput: string) => {
+    return fetch(`/api/search?ticker=${userInput}`).then(async (res) => {
+      const rawData = await res.json();
+      return rawData.data;
+    });
   };
 
   return (
@@ -145,14 +157,22 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
                       : 'Ticker'}
                   </label>
                   <p className='text-sm text-red-400 '></p>
-                  <input
-                    className='border-2 border-gray-500 p-2 rounded-md w-full focus:border-teal-500 focus:ring-teal-500 '
-                    type='text'
+
+                  <AsyncSelect
+                    className='border-2 border-gray-500 rounded-md w-full focus:border-teal-500 focus:ring-teal-500 '
+                    cacheOptions
                     name='tickerSymbol'
-                    placeholder='AAPL'
-                    onChange={formik.handleChange}
-                    value={formik.values.tickerSymbol}
+                    isMulti={false}
                     onBlur={formik.handleBlur}
+                    loadOptions={loadOptions}
+                    onChange={(event: any) => {
+                      formik.setFieldValue(
+                        'tickerSymbol',
+                        event.value.toUpperCase()
+                      );
+                    }}
+                    placeholder='AAPL'
+                    noOptionsMessage={() => 'Search for ticker'}
                   />
                 </div>
                 {/* Amount input field */}
