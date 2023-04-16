@@ -3,13 +3,14 @@ import UpsideDownTriangle from '@/images/svg/upside-down-triangle.svg';
 import { getMultiplier, getStartDateMatchingData } from '@/lib/dataUtils';
 import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
 import getStockData from '@/lib/fetchers/getStockData';
+import { notifyDelete } from '@/lib/toasts';
 import { InvestmentRecord, StockData } from '@/types';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { BsFillCalendar2CheckFill } from 'react-icons/bs';
+import { BsCheckCircle, BsFillCalendar2CheckFill } from 'react-icons/bs';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { RiDeleteBin6Fill, RiMoneyDollarCircleFill } from 'react-icons/ri';
 import { RxDoubleArrowRight } from 'react-icons/rx';
@@ -69,6 +70,7 @@ const RecordCard = ({ investmentRecord }: props) => {
     // which will trigger a re-render of the list, removing the deleted one.
     // https://swr.vercel.app/docs/mutation
     mutate(investmentRecords?.filter((record) => record.id !== rawData.data));
+    notifyDelete(<BsCheckCircle className='text-green-300' />);
   };
 
   return (

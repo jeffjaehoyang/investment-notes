@@ -1,11 +1,13 @@
 import { formatDate } from '@/lib/dataUtils';
 import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
 import { useEscapeKey } from '@/lib/functionUtils';
+import { notifyCreate } from '@/lib/toasts';
 import { InvestmentRecord } from '@/types';
 import { useFormik } from 'formik';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { Dispatch, SetStateAction } from 'react';
+import { BsCheckCircle } from 'react-icons/bs';
 import { ThreeDots } from 'react-loader-spinner';
 import AsyncSelect from 'react-select/async';
 import useSWR from 'swr';
@@ -95,6 +97,7 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
         investmentRecords?.push(
           createRecordResponseRawData.data as InvestmentRecord
         );
+        notifyCreate(<BsCheckCircle className='text-green-300' />);
       } catch (error) {
         console.log(error);
       } finally {

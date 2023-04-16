@@ -3,6 +3,7 @@ import Seo from '@/components/Seo';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -16,6 +17,7 @@ export default function Home() {
     <>
       <Seo />
       <LandingPage />
+      <Toaster />
     </>
   );
 }
