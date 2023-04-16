@@ -12,6 +12,9 @@ export const authOptions: NextAuthOptions = {
     //   clientSecret: process.env.OAUTH_CLIENT_SECRET as string,
     // }),
   ],
+  pages: {
+    signIn: '/',
+  },
 };
 
 export default NextAuth(authOptions);

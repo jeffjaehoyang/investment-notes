@@ -38,11 +38,8 @@ export default {
           },
         },
         shimmer: {
-          '0%': {
-            backgroundPosition: '-700px 0',
-          },
           '100%': {
-            backgroundPosition: '700px 0',
+            transform: 'translateX(100%)',
           },
         },
         shine: {

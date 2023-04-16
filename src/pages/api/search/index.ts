@@ -20,14 +20,12 @@ export default async function handler(
         quotesCount: 5,
         newsCount: 0,
       });
-      console.log(searchResults.quotes.length);
       const filteredResult = searchResults.quotes.slice(0, 5).map((quote) => {
         return {
           value: quote.symbol,
           label: `${quote.symbol} (${quote.shortname})`,
         };
       });
-      console.log('filtered result: ', filteredResult);
       return res.status(200).json({
         data: filteredResult,
       });

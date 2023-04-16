@@ -100,7 +100,7 @@ const RecordCard = ({ investmentRecord }: props) => {
           <div className='flex flex-row items-center'>
             <BsFillCalendar2CheckFill />
             <div className='ml-2'>
-              Recorded On:{' '}
+              Recorded:{' '}
               {new Date(investmentRecord.startDate).toLocaleDateString()}
             </div>
           </div>
@@ -111,7 +111,7 @@ const RecordCard = ({ investmentRecord }: props) => {
             </div>
           </div>
         </div>
-        <div className='flex h-12 w-12 flex-row items-center justify-center'>
+        <div className='flex flex-row items-center justify-bewteen'>
           {multiplier && multiplier < 1 ? (
             <UpsideDownTriangle width={20} height={20} fill='red' />
           ) : (

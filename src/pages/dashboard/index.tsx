@@ -1,13 +1,12 @@
-import { useSession } from 'next-auth/react';
-import React, { useState } from 'react';
-import useSWR from 'swr';
-
+import RecordCard from '@/components/RecordCard';
 import ShowCreateRecordFormButton from '@/components/buttons/ShowCreateRecordFormButton';
 import CreateRecordForm from '@/components/forms/CreateRecordForm';
-import RecordCard from '@/components/RecordCard';
 import { getFirstName } from '@/lib/dataUtils';
 import getInvestmentRecordsForUser from '@/lib/fetchers/getInvestmentRecordsForUser';
 import { InvestmentRecord, User } from '@/types';
+import { useSession } from 'next-auth/react';
+import React, { useState } from 'react';
+import useSWR from 'swr';
 
 const Dashboard = () => {
   const { data: session } = useSession();
