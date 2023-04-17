@@ -1,6 +1,5 @@
 import { getErrorMessage } from '@/lib/functionUtils';
 import prisma from '@/lib/prisma';
-
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 /**

@@ -80,12 +80,12 @@ const RecordCard = ({ investmentRecord }: props) => {
         <div className='flex flex-row items-center' style={{ minHeight: 40 }}>
           <Image
             alt='logo'
-            src={`https://logo.clearbit.com/${investmentRecord.companyDomain}`}
+            src={`https://logo.clearbit.com/${investmentRecord?.companyDomain}`}
             width={40}
             height={40}
             className='rounded-lg'
           />
-          <div className='ml-4'>{investmentRecord.tickerSymbol}</div>
+          <div className='ml-4'>{investmentRecord?.tickerSymbol}</div>
         </div>
 
         <button
@@ -103,13 +103,13 @@ const RecordCard = ({ investmentRecord }: props) => {
             <BsFillCalendar2CheckFill />
             <div className='ml-2'>
               Recorded:{' '}
-              {new Date(investmentRecord.startDate).toLocaleDateString()}
+              {new Date(investmentRecord?.startDate).toLocaleDateString()}
             </div>
           </div>
           <div className='flex flex-row items-center'>
             <RiMoneyDollarCircleFill />
             <div className='ml-2'>
-              Capital: ${investmentRecord.amount.toLocaleString()}
+              Capital: ${investmentRecord?.amount.toLocaleString()}
             </div>
           </div>
         </div>
@@ -137,7 +137,7 @@ const RecordCard = ({ investmentRecord }: props) => {
           style={{ position: 'absolute', left: -5, top: -5 }}
         />
         <div className='text-elipsis line-clamp-1'>
-          {investmentRecord.notes}
+          {investmentRecord?.notes}
         </div>
       </div>
 
@@ -145,7 +145,7 @@ const RecordCard = ({ investmentRecord }: props) => {
       <div className='mt-2 flex flex-row-reverse hover:cursor-pointer'>
         <Link
           className='flex flex-row items-center max-w-fit'
-          href={`/details/${investmentRecord.id}`}
+          href={`/details/${investmentRecord?.id}`}
         >
           See Details
           <RxDoubleArrowRight className='ml-2' />

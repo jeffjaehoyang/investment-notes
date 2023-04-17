@@ -38,7 +38,7 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
   // https://swr.vercel.app/docs/mutation
   const { data: investmentRecords, mutate } = useSWR<InvestmentRecord[]>(
     session?.user
-      ? { url: '/api/investmentRecords/', args: session?.user.email }
+      ? { url: '/api/investmentRecords/', args: session?.user?.email }
       : null,
     getInvestmentRecordsForUser
   );
@@ -54,7 +54,6 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
       /* end user input fields */
 
       /* start derived fields */
-      email: session?.user?.email,
       companyDomain: '',
       companyName: '',
       /* end derived fields */
@@ -88,6 +87,7 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
           },
           body: JSON.stringify({
             ...values,
+            email: session?.user?.email,
             notes: values.notes.length ? values.notes : 'No notes recorded.',
             companyDomain: companyInfoResponseRawData.data.companyDomain,
             companyName: companyInfoResponseRawData.data.companyName,
@@ -97,6 +97,7 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
         investmentRecords?.push(
           createRecordResponseRawData.data as InvestmentRecord
         );
+        mutate(investmentRecords);
         notifyCreate(<BsCheckCircle className='text-green-300' />);
       } catch (error) {
         console.log(error);
@@ -104,7 +105,6 @@ const CreateRecordForm = ({ showModal, setShowModal }: Props) => {
         resetForm();
         setShowModal(false);
         setSubmitting(false);
-        mutate(investmentRecords);
       }
     },
   });
